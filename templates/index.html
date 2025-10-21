@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart Web Stream API: Premium streaming and downloading for Telegram files, movies, and series. Developed by Abir Arafat Chawdhury.">
+    <meta name="keywords" content="Smart Web Stream API, premium streaming, Telegram API, Abir Arafat Chawdhury">
+    <meta name="author" content="Abir Arafat Chawdhury">
+    <title>Smart Web Stream API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://i.ibb.co/Hh4kF2b/icon.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #F0B90B;
+            --primary-hover: #d4a017;
+            --accent-color: #00C4B4;
+            --accent-hover: #00a89a;
+            --text-color: #1a1a1a;
+            --bg-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            --gradient-1: linear-gradient(135deg, #F0B90B 0%, #00C4B4 100%);
+            --gradient-2: linear-gradient(135deg, #00C4B4 0%, #F0B90B 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #f8f9fa, #e9ecef);
+            color: var(--text-color);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(233, 236, 239, 0.75));
+            padding: 4rem 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .hero .developer-credit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero .developer-credit img {
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero .developer-credit:hover img {
+            transform: scale(1.1);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: #6c757d;
+            max-width: 520px;
+            margin: 0.75rem auto 1.5rem;
+        }
+
+        .hero .btn {
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.65rem 1.3rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hero .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero .btn i {
+            font-size: 1.2rem;
+        }
+
+        .features {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+        }
+
+        .features h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            padding: 1.5rem;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            margin-bottom: 1.5rem;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            border-color: rgba(0, 196, 180, 0.4);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            position: relative;
+        }
+
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: inherit;
+            filter: blur(20px);
+            opacity: 0.5;
+        }
+
+        .feature-icon i {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #4a4a4a;
+            text-align: center;
+        }
+
+        .feature-popup {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 300px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .feature-card:hover .feature-popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .api-docs {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.6s forwards;
+        }
+
+        .api-docs h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .accordion-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .accordion-button {
+            background: transparent;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: var(--accent-color);
+            color: #fff;
+            box-shadow: none;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border: none;
+        }
+
+        .accordion-button .api-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            position: relative;
+        }
+
+        .accordion-button .api-icon::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: inherit;
+            filter: blur(10px);
+            opacity: 0.5;
+        }
+
+        .accordion-button .api-icon i {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+
+        .accordion-button:not(.collapsed) .api-icon i {
+            color: #fff;
+        }
+
+        .accordion-body {
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #4a4a4a;
+        }
+
+        .accordion-body pre {
+            background: #f1f3f5;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .contact-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            padding: 2.25rem;
+            border-radius: 14px;
+            margin: 2.5rem auto;
+            max-width: 1200px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--accent-color);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.9s forwards;
+        }
+
+        .contact-section h2 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .contact-section p {
+            font-size: 1.05rem;
+            color: #4a4a4a;
+            max-width: 620px;
+            margin: 0 auto 1.25rem;
+        }
+
+        .contact-section .btn {
+            background: var(--accent-color);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.65rem 1.3rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-section .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-section .btn i {
+            font-size: 1.2rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        footer {
+            background: var(--card-bg);
+            padding: 2.5rem 0;
+            margin-top: 2.5rem;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.2s forwards;
+        }
+
+        .footer-social a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            margin: 0 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            color: var(--primary-color);
+            transform: scale(1.15);
+        }
+
+        .footer-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #555;
+            margin-top: 0.8rem;
+        }
+
+        .footer-text strong {
+            color: var(--primary-color);
+        }
+
+        .footer-text a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .text-muted {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .hero .developer-credit img { height: 20px; }
+            .features h2, .api-docs h2 { font-size: 1.75rem; }
+            .contact-section { padding: 1.75rem; }
+            .footer-social a { font-size: 1.3rem; }
+            .feature-popup { width: 80%; font-size: 0.9rem; }
+            .accordion-body pre { font-size: 0.85rem; }
+            .feature-icon { width: 50px; height: 50px; font-size: 1.8rem; }
+            .accordion-button .api-icon { width: 36px; height: 36px; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="container">
+            <div class="developer-credit">
+                <span><b>Developed by: Abir Arafat Chawdhury</b></span>
+                <img src="https://www.crossed-flag-pins.com/animated-flag-gif/gifs/Bangladesh_240-animated-flag-gifs.gif" alt="Bangladesh Flag">
+            </div>
+            <h1 class="display-4 fw-bold">Smart Web Stream API</h1>
+            <p class="lead text-muted">Seamlessly stream and download Telegram files with a high-performance API, powered by Abir Arafat Chawdhury.</p>
+            <a href="https://t.me/AbirArafatChawdhury" class="btn">
+                Get Started with the API
+                <i class="fad fa-rocket-launch"></i>
+            </a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Smart Web Stream API?</h2>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: var(--gradient-1);">
+                            <i class="fas fa-telegram"></i>
+                        </div>
+                        <h3>Telegram Integration</h3>
+                        <p>Directly access Telegram files using Telethon.</p>
+                        <div class="feature-popup">Leverages Telethon for robust Telegram API integration.</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: var(--gradient-2);">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <h3>High-Speed Streaming</h3>
+                        <p>Stream files with minimal latency and adaptive quality.</p>
+                        <div class="feature-popup">Optimized for real-time streaming with low latency.</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: var(--gradient-3);">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3>Secure Downloads</h3>
+                        <p>Download files with secure code-based access.</p>
+                        <div class="feature-popup">Requires a valid code for secure file downloads.</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: var(--gradient-4);">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>Code Authentication</h3>
+                        <p>Protect file access with code-based validation.</p>
+                        <div class="feature-popup">Ensures only authorized users access files via unique codes.</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: var(--gradient-1);">
+                            <i class="fas fa-sliders"></i>
+                        </div>
+                        <h3>Range-Based Downloads</h3>
+                        <p>Support for partial file downloads with range headers.</p>
+                        <div class="feature-popup">Efficiently handles large files with byte-range requests.</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="feature-card">
+                        <div class="feature-icon" style="background: var(--gradient-2);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3>Error Handling</h3>
+                        <p>Robust error responses for invalid requests.</p>
+                        <div class="feature-popup">Clear error messages for 400, 401, 403, 404, 416, 500, 503 status codes.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="api-docs">
+        <div class="container">
+            <h2>API Documentation</h2>
+            <div class="accordion" id="apiDocsAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#homeMethod">
+                            <span class="api-icon" style="background: var(--gradient-1);">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            GET /
+                        </button>
+                    </h2>
+                    <div id="homeMethod" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                        <div class="accordion-body">
+                            <p>Retrieve the homepage of the Smart Web Stream API.</p>
+                            <p><strong>Parameters:</strong> None</p>
+                            <p><strong>Response:</strong> HTML content of the homepage</p>
+                            <pre>curl -X GET "http://147.93.19.133:8000/"</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#streamMethod">
+                            <span class="api-icon" style="background: var(--gradient-2);">
+                                <i class="fas fa-play"></i>
+                            </span>
+                            GET /stream/{file_id}
+                        </button>
+                    </h2>
+                    <div id="streamMethod" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                        <div class="accordion-body">
+                            <p>Stream a Telegram file by its ID with code-based authentication.</p>
+                            <p><strong>Parameters:</strong> file_id (integer, required), code (string, required)</p>
+                            <p><strong>Response:</strong> HTML player page with streaming URL</p>
+                            <pre>curl -X GET "http://147.93.19.133:8000/stream/12345?code=abc123"</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#downloadMethod">
+                            <span class="api-icon" style="background: var(--gradient-3);">
+                                <i class="fas fa-download"></i>
+                            </span>
+                            GET /dl/{file_id}
+                        </button>
+                    </h2>
+                    <div id="downloadMethod" class="accordion-collapse collapse" data-bs-parent="#apiDocsAccordion">
+                        <div class="accordion-body">
+                            <p>Download a Telegram file by its ID with code-based authentication.</p>
+                            <p><strong>Parameters:</strong> file_id (integer, required), code (string, required), Range (header, optional)</p>
+                            <p><strong>Response:</strong> File stream (partial if Range header provided)</p>
+                            <pre>curl -X GET "http://147.93.19.133:8000/dl/12345?code=abc123" \
+-H "Range: bytes=0-1048575"</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2>Need Custom Bots & APIs? 🧩</h2>
+            <p>Craft bespoke Telegram bots and APIs in Python, PHP, Node.js, and more. Partner with us for elite, tailored solutions.</p>
+            <a href="https://t.me/AbirArafatChawdhury" class="btn">
+                Connect with Abir Arafat Chawdhury
+                <i class="fad fa-paper-plane-top"></i>
+            </a>
+        </div>
+    </section>
+
+    <footer class="text-center">
+        <div class="container">
+            <div class="footer-social mb-3">
+                <a href="https://github.com/TheSmartDevs" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://facebook.com/abirxdhackz" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://instagram.com/abirxdhackz" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/abirxdhackz" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://youtube.com/@abirxdhackz" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://t.me/AbirArafatChawdhury" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a>
+            </div>
+            <p class="footer-text">
+                Crafted with <strong>passion</strong> by <a href="https://t.me/AbirArafatChawdhury" target="_blank">Abir Arafat Chawdhury 🇧🇩</a> | Join our <strong>community</strong>: <a href="https://t.me/TheSmartDev" target="_blank">t.me/TheSmartDev</a>
+            </p>
+            <p class="text-muted mt-2">© 2025 Smart Web Stream. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
