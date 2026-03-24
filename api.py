@@ -23,7 +23,7 @@ class Telegram:
 class Server:
     BASE_URL = "http://161.97.132.210:5000"
     BIND_ADDRESS = "0.0.0.0"
-    PORT = 5000
+    PORT = 8000
 
 templates = Jinja2Templates(directory="templates")
 
