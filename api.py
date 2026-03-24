@@ -21,7 +21,7 @@ class Telegram:
     CHANNEL_ID = LOG_CHANNEL_ID
 
 class Server:
-    BASE_URL = "http://161.97.132.210:5000"
+    BASE_URL = "http://quintessential-shandra-omsairamkrishna5-919cf9d3.koyeb.app"
     BIND_ADDRESS = "0.0.0.0"
     PORT = 8000
 
